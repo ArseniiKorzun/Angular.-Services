@@ -1,0 +1,16 @@
+<header class="header">
+  <div class="container header-inner">
+    <span class="brand">Angular. Сервіси</span>
+    <nav class="nav">
+      @for (link of links; track link.path) {
+        <a [routerLink]="link.path" routerLinkActive="active">
+          {{ link.label }}
+        </a>
+      }
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <router-outlet />
+</main>

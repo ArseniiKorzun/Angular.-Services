@@ -1,0 +1,54 @@
+h3 {
+  margin-top: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: top;
+}
+
+.joke-text {
+  cursor: pointer;
+}
+
+.joke-text:hover {
+  color: #2563eb;
+}
+
+.details {
+  margin-top: 8px;
+  padding: 8px;
+  background: #f9fafb;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  word-break: break-all;
+}
+
+.star {
+  background: none;
+  border: none;
+  color: #d1d5db;
+  font-size: 1.4rem;
+  padding: 0 4px;
+}
+
+.star.on {
+  color: #f59e0b;
+}
+
+li {
+  margin-bottom: 6px;
+}
+
+button.small {
+  padding: 2px 8px;
+  font-size: 0.8rem;
+}

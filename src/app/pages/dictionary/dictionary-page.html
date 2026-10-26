@@ -1,0 +1,42 @@
+<h1>Онлайн-словник англійських слів</h1>
+
+<div class="card">
+  <form class="row" (ngSubmit)="search()">
+    <input type="text" name="word" placeholder="Введіть англійське слово" [(ngModel)]="word" style="flex: 1" />
+    <button type="submit" [disabled]="loading() || !word().trim()">Шукати</button>
+  </form>
+</div>
+
+@if (loading()) {
+  <p class="muted">Пошук...</p>
+}
+@if (error()) {
+  <p class="error">{{ error() }}</p>
+}
+
+@for (entry of entries(); track $index) {
+  <div class="card">
+    <div class="row">
+      <h2>{{ entry.word }}</h2>
+      @if (transcription(entry); as t) {
+        <span class="phonetic">{{ t }}</span>
+      }
+    </div>
+
+    @for (meaning of entry.meanings; track $index) {
+      <section>
+        <h3><span class="badge">{{ meaning.partOfSpeech }}</span></h3>
+        <ol>
+          @for (def of meaning.definitions; track $index) {
+            <li>
+              {{ def.definition }}
+              @if (def.example) {
+                <div class="example">Приклад: «{{ def.example }}»</div>
+              }
+            </li>
+          }
+        </ol>
+      </section>
+    }
+  </div>
+}

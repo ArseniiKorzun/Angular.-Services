@@ -1,0 +1,87 @@
+<h1>Жарти Чака Норріса</h1>
+
+<div class="card">
+  <div class="row">
+    <select [(ngModel)]="randomCategory">
+      <option value="">Будь-яка категорія</option>
+      @for (c of categories(); track c) {
+        <option [value]="c">{{ c }}</option>
+      }
+    </select>
+    <button (click)="randomJoke()" [disabled]="loading()">Випадковий жарт</button>
+  </div>
+</div>
+
+<div class="card">
+  <div class="row">
+    <select [(ngModel)]="filterCategory">
+      <option value="">Усі категорії</option>
+      @for (c of categories(); track c) {
+        <option [value]="c">{{ c }}</option>
+      }
+      <option [value]="noCategory">без категорії</option>
+    </select>
+    <input type="search" placeholder="Фільтр за ключовим словом" [(ngModel)]="filterText" style="flex: 1" />
+    <select [(ngModel)]="sortOrder">
+      <option value="none">Без сортування</option>
+      <option value="asc">Категорія A → Z</option>
+      <option value="desc">Категорія Z → A</option>
+    </select>
+  </div>
+</div>
+
+@if (error()) {
+  <p class="error">{{ error() }}</p>
+}
+@if (loading()) {
+  <p class="muted">Завантаження...</p>
+}
+
+<div class="card">
+  <table>
+    <thead>
+      <tr>
+        <th>Жарт</th>
+        <th>Категорія</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (joke of visibleJokes(); track joke.id) {
+        <tr>
+          <td>
+            <span class="joke-text" (click)="toggleDetails(joke.id)">{{ joke.value }}</span>
+            @if (expandedId() === joke.id) {
+              <div class="details">
+                <div><b>ID:</b> {{ joke.id }}</div>
+                <div><b>Створено:</b> {{ joke.created_at.replace(' ', 'T') | date: 'dd.MM.yyyy HH:mm' }}</div>
+                <div><b>Оновлено:</b> {{ joke.updated_at.replace(' ', 'T') | date: 'dd.MM.yyyy HH:mm' }}</div>
+                <div><b>Посилання:</b> <a [href]="joke.url" target="_blank" rel="noopener">{{ joke.url }}</a></div>
+              </div>
+            }
+          </td>
+          <td><span class="badge">{{ categoryOf(joke) }}</span></td>
+          <td>
+            <button class="star" [class.on]="service.isFavorite(joke.id)" (click)="service.toggleFavorite(joke)">★</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr><td colspan="3" class="muted">Жартів немає.</td></tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <h3>Обране</h3>
+  <ul>
+    @for (joke of service.getFavorites()(); track joke.id) {
+      <li>
+        {{ joke.value }} <span class="badge">{{ categoryOf(joke) }}</span>
+        <button class="secondary small" (click)="service.toggleFavorite(joke)">Прибрати</button>
+      </li>
+    } @empty {
+      <li class="muted">Обраних жартів немає.</li>
+    }
+  </ul>
+</div>

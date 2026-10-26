@@ -1,0 +1,26 @@
+h2 {
+  margin: 0;
+}
+
+.phonetic {
+  color: #6b7280;
+  font-size: 1.1rem;
+}
+
+section {
+  margin-top: 12px;
+}
+
+h3 {
+  margin: 0 0 6px;
+}
+
+li {
+  margin-bottom: 6px;
+}
+
+.example {
+  color: #059669;
+  font-style: italic;
+  font-size: 0.9rem;
+}
